@@ -64,7 +64,7 @@ jobs:
 
               for i in {1..30}
               do
-                PID=\$(ps -ef | grep java | grep 'ROOT.jar | grep -v grep | awk '{print \$2}')
+                PID=\$(ps -ef | grep java | grep ROOT.jar | grep -v grep | awk '{print \$2}')
 
                 if [ -z \"\$PID\" ]; then
                   echo 'Tomcat 종료 완료'
@@ -82,7 +82,7 @@ jobs:
               cp /home/ubuntu/ROOT.jar /home/ubuntu/log/ROOT_backup.jar || true
 
               echo '===== 신규 WAR 반영 ====='
-              cp /home/ubuntu/log/ROOT.jar /home/ubuntu/ROOT.war
+              cp /home/ubuntu/log/ROOT.jar /home/ubuntu/ROOT.jar
 
               echo '===== Tomcat 시작 ====='
               cd /home/ubuntu/log
