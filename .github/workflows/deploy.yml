@@ -3,11 +3,7 @@ name: 개발배포
 on:
   push:
     branches:
-      - develop
-    profile:
-      description: 'Spring Profile'
-      required: true
-      default: 'dev'
+      - main
 
 env:
   DEPLOY_HOST: 210.106.105.241
