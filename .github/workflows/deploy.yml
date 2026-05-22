@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: '배포 브랜치'
+        required: true
+        default: 'main'
 
 env:
   DEPLOY_HOST: 193.122.109.159
