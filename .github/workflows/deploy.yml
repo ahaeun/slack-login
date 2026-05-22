@@ -45,7 +45,7 @@ jobs:
         run: |
           scp -i ~/.ssh/slack-login.pem \
           -o StrictHostKeyChecking=no \
-          build/libs/*.jar \
+          build/libs/ROOT.jar \
           ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:/home/ubuntu/log/ROOT.jar
 
       - name: 개발 서버 배포
@@ -56,7 +56,7 @@ jobs:
 
               echo '===== Tomcat 종료 ====='
               cd /home/ubuntu/log
-              nohup ./stop.sh > /dev/null 2>&1 &
+              ./stop.sh
 
               sleep 5
 
