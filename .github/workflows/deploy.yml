@@ -56,7 +56,7 @@ jobs:
 
               echo '===== Tomcat 종료 ====='
               cd /home/ubuntu/log
-              ./stop.sh
+              ./stop.sh || true
 
               sleep 5
 
