@@ -6,8 +6,8 @@ on:
       - main
 
 env:
-  DEPLOY_HOST: 210.106.105.241
-  DEPLOY_USER: root
+  DEPLOY_HOST: 193.122.109.159
+  DEPLOY_USER: ubuntu
 
 jobs:
   deploy:
