@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 · Slack</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+    <main class="login">
+        <header class="login__brand">
+            <!-- Slack 로고 -->
+            <svg class="login__logo" viewBox="0 0 122 122" role="img" aria-label="Slack">
+                <path fill="#36C5F0" d="M25.8 77.2a12.9 12.9 0 1 1-12.9-12.9h12.9v12.9zM32.3 77.2a12.9 12.9 0 0 1 25.8 0v32.3a12.9 12.9 0 0 1-25.8 0V77.2z"/>
+                <path fill="#2EB67D" d="M45.2 25.8a12.9 12.9 0 1 1 12.9-12.9v12.9H45.2zM45.2 32.3a12.9 12.9 0 0 1 0 25.8H12.9a12.9 12.9 0 0 1 0-25.8h32.3z"/>
+                <path fill="#ECB22E" d="M96.2 45.2a12.9 12.9 0 1 1 12.9 12.9H96.2V45.2zM89.7 45.2a12.9 12.9 0 0 1-25.8 0V12.9a12.9 12.9 0 0 1 25.8 0v32.3z"/>
+                <path fill="#E01E5A" d="M76.8 96.2a12.9 12.9 0 1 1-12.9 12.9V96.2h12.9zM76.8 89.7a12.9 12.9 0 0 1 0-25.8h32.3a12.9 12.9 0 0 1 0 25.8H76.8z"/>
+            </svg>
+            <span class="login__brand-name">Slack</span>
+        </header>
+
+        <section class="login__card">
+            <h1 class="login__title">로그인</h1>
+            <p class="login__subtitle">Slack 계정으로 계속 진행하세요.</p>
+
+            <!-- TODO: OAuth 연동 시 href를 인가 요청 URL로 교체 -->
+            <a class="login__slack-btn" href="#" data-oauth="pending">
+                <svg class="login__slack-btn-icon" viewBox="0 0 122 122" aria-hidden="true">
+                    <path fill="#36C5F0" d="M25.8 77.2a12.9 12.9 0 1 1-12.9-12.9h12.9v12.9zM32.3 77.2a12.9 12.9 0 0 1 25.8 0v32.3a12.9 12.9 0 0 1-25.8 0V77.2z"/>
+                    <path fill="#2EB67D" d="M45.2 25.8a12.9 12.9 0 1 1 12.9-12.9v12.9H45.2zM45.2 32.3a12.9 12.9 0 0 1 0 25.8H12.9a12.9 12.9 0 0 1 0-25.8h32.3z"/>
+                    <path fill="#ECB22E" d="M96.2 45.2a12.9 12.9 0 1 1 12.9 12.9H96.2V45.2zM89.7 45.2a12.9 12.9 0 0 1-25.8 0V12.9a12.9 12.9 0 0 1 25.8 0v32.3z"/>
+                    <path fill="#E01E5A" d="M76.8 96.2a12.9 12.9 0 1 1-12.9 12.9V96.2h12.9zM76.8 89.7a12.9 12.9 0 0 1 0-25.8h32.3a12.9 12.9 0 0 1 0 25.8H76.8z"/>
+                </svg>
+                <span>Slack으로 로그인</span>
+            </a>
+
+            <div class="login__divider"><span>또는</span></div>
+
+            <form class="login__form" onsubmit="return false;">
+                <label class="login__field">
+                    <span class="login__label">이메일</span>
+                    <input type="email" name="email" placeholder="name@work-email.com" autocomplete="email">
+                </label>
+                <label class="login__field">
+                    <span class="login__label">비밀번호</span>
+                    <input type="password" name="password" placeholder="••••••••" autocomplete="current-password">
+                </label>
+                <button type="submit" class="login__email-btn">이메일로 로그인</button>
+            </form>
+
+            <p class="login__help">
+                계정이 없으신가요? <a href="#">워크스페이스 만들기</a>
+            </p>
+        </section>
+
+        <footer class="login__footer">
+            <a href="#">개인정보처리방침</a>
+            <span aria-hidden="true">·</span>
+            <a href="#">이용약관</a>
+            <span aria-hidden="true">·</span>
+            <a href="#">고객센터</a>
+        </footer>
+    </main>
+</body>
+</html>

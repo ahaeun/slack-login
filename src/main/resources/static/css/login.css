@@ -1,0 +1,208 @@
+:root {
+    --slack-aubergine: #4a154b;
+    --slack-text: #1d1c1d;
+    --slack-muted: #616061;
+    --slack-border: #dddbdd;
+    --slack-blue: #1264a3;
+    --radius: 12px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+        "Malgun Gothic", "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font);
+    color: var(--slack-text);
+    background: #f8f8fb;
+    min-height: 100vh;
+}
+
+.login {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 40px 20px;
+}
+
+/* 브랜드 */
+.login__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login__logo {
+    width: 44px;
+    height: 44px;
+}
+
+.login__brand-name {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--slack-aubergine);
+}
+
+/* 카드 */
+.login__card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border: 1px solid var(--slack-border);
+    border-radius: var(--radius);
+    padding: 40px 36px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.login__title {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.login__subtitle {
+    margin: 0 0 28px;
+    color: var(--slack-muted);
+    font-size: 15px;
+}
+
+/* Slack 로그인 버튼 */
+.login__slack-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--slack-border);
+    border-radius: var(--radius);
+    background: #fff;
+    color: var(--slack-text);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.login__slack-btn:hover {
+    background: #f7f7f9;
+    border-color: #c9c7c9;
+}
+
+.login__slack-btn-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* 구분선 */
+.login__divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+    color: var(--slack-muted);
+    font-size: 13px;
+}
+
+.login__divider::before,
+.login__divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--slack-border);
+}
+
+/* 이메일 폼 */
+.login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+}
+
+.login__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.login__label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--slack-text);
+}
+
+.login__field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--slack-border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login__field input:focus {
+    outline: none;
+    border-color: var(--slack-aubergine);
+    box-shadow: 0 0 0 3px rgba(74, 21, 75, 0.12);
+}
+
+.login__email-btn {
+    margin-top: 6px;
+    width: 100%;
+    padding: 13px 16px;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--slack-aubergine);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.login__email-btn:hover {
+    background: #611f64;
+}
+
+.login__help {
+    margin: 24px 0 0;
+    font-size: 14px;
+    color: var(--slack-muted);
+}
+
+.login__help a,
+.login__footer a {
+    color: var(--slack-blue);
+    text-decoration: none;
+}
+
+.login__help a:hover,
+.login__footer a:hover {
+    text-decoration: underline;
+}
+
+/* 푸터 */
+.login__footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--slack-muted);
+}
