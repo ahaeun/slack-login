@@ -206,3 +206,43 @@ body {
     font-size: 13px;
     color: var(--slack-muted);
 }
+
+/* 홈 화면 */
+.home__avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    object-fit: cover;
+    margin-bottom: 16px;
+}
+
+.home__info {
+    margin: 24px 0 28px;
+    padding: 16px 18px;
+    background: #f7f7f9;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.home__info dt {
+    color: var(--slack-muted);
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.home__info dt:first-child {
+    margin-top: 0;
+}
+
+.home__info dd {
+    margin: 2px 0 0;
+    color: var(--slack-text);
+    word-break: break-all;
+}
+
+.home__logout {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}

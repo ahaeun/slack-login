@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.example.slack.auth.model.LoginUser;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.oauth.OAuthV2AccessRequest;
@@ -31,9 +32,16 @@ public class AuthService {
         this.slackClient = slackClient;
     }
 
-    public void login(final String code) {
+    /**
+     * 인가 코드를 Slack 토큰으로 교환하고, 사용자 정보를 조회해 반환한다.
+     *
+     * @param code Slack 콜백으로 받은 인가 코드
+     * @return 로그인 사용자 정보
+     * @throws IllegalStateException Slack 통신 실패 시
+     */
+    public LoginUser login(final String code) {
         try {
-            // 1. token 발급 요청
+            // 1. 인가 코드 → 사용자 액세스 토큰 교환
             OAuthV2AccessRequest accessRequest = OAuthV2AccessRequest.builder()
                 .clientId(clientId)
                 .clientSecret(clientSecret)
@@ -44,19 +52,21 @@ public class AuthService {
             OAuthV2AccessResponse accessResponse = slackClient.oauthV2Access(accessRequest);
             String token = accessResponse.getAuthedUser().getAccessToken();
 
-            // 2. Slack에 사용자 정보 조회 요청
+            // 2. 사용자 정보 조회
             UsersIdentityRequest identityRequest = UsersIdentityRequest.builder()
                 .token(token)
                 .build();
 
-            UsersIdentityResponse.User user = slackClient.usersIdentity(identityRequest)
-                .getUser();
+            UsersIdentityResponse.User user = slackClient.usersIdentity(identityRequest).getUser();
 
-            // 시스템 자체 로그인 로직 수행 (ex: JWT 토큰 또는 세션ID 발급 등)
+            return new LoginUser(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getImage512());
 
         } catch (IOException | SlackApiException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Slack 로그인 처리에 실패했습니다.", e);
         }
     }
-
 }
