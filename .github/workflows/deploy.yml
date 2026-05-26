@@ -52,6 +52,19 @@ jobs:
           build/libs/ROOT.jar \
           ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:/home/ubuntu/log
 
+      - name: 서버 .env 생성 및 전송
+        run: |
+          cat > .env.deploy <<'EOF'
+          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+          SLACK_CLIENT_ID=${{ secrets.SLACK_CLIENT_ID }}
+          SLACK_CLIENT_SECRET=${{ secrets.SLACK_CLIENT_SECRET }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          EOF
+          scp -i ~/.ssh/slack-login.pem -o StrictHostKeyChecking=no \
+            .env.deploy ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:/home/ubuntu/log/.env
+          rm -f .env.deploy
+
       - name: 개발 서버 배포
         run: |
           ssh -i ~/.ssh/slack-login.pem \
