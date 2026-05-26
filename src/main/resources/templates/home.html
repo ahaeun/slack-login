@@ -9,13 +9,7 @@
 <body>
     <main class="login">
         <header class="login__brand">
-            <svg class="login__logo" viewBox="0 0 122 122" role="img" aria-label="Slack">
-                <path fill="#36C5F0" d="M25.8 77.2a12.9 12.9 0 1 1-12.9-12.9h12.9v12.9zM32.3 77.2a12.9 12.9 0 0 1 25.8 0v32.3a12.9 12.9 0 0 1-25.8 0V77.2z"/>
-                <path fill="#2EB67D" d="M45.2 25.8a12.9 12.9 0 1 1 12.9-12.9v12.9H45.2zM45.2 32.3a12.9 12.9 0 0 1 0 25.8H12.9a12.9 12.9 0 0 1 0-25.8h32.3z"/>
-                <path fill="#ECB22E" d="M96.2 45.2a12.9 12.9 0 1 1 12.9 12.9H96.2V45.2zM89.7 45.2a12.9 12.9 0 0 1-25.8 0V12.9a12.9 12.9 0 0 1 25.8 0v32.3z"/>
-                <path fill="#E01E5A" d="M76.8 96.2a12.9 12.9 0 1 1-12.9 12.9V96.2h12.9zM76.8 89.7a12.9 12.9 0 0 1 0-25.8h32.3a12.9 12.9 0 0 1 0 25.8H76.8z"/>
-            </svg>
-            <span class="login__brand-name">Slack</span>
+            <span class="login__brand-name">HOME</span>
         </header>
 
         <section class="login__card">
@@ -30,8 +24,6 @@
                 <dd th:text="${user.name}">-</dd>
                 <dt>이메일</dt>
                 <dd th:text="${user.email}">-</dd>
-                <dt>Slack User ID</dt>
-                <dd th:text="${user.id}">-</dd>
             </dl>
 
             <a class="login__email-btn home__logout" th:href="@{/logout}">로그아웃</a>

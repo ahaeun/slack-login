@@ -1,13 +1,10 @@
 package com.example.slack.auth;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.slack.auth.jwt.JwtTokenProvider;
 import com.example.slack.auth.model.LoginUser;
@@ -15,55 +12,22 @@ import com.example.slack.auth.web.AuthCookieFactory;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * 토큰 관련 엔드포인트.
+ *
+ * <p>OAuth 인가·콜백은 Spring Security(oauth2Login)가 처리하므로,
+ * 여기서는 토큰 재발급과 로그아웃만 담당한다.
+ */
 @Controller
 public class AuthController {
 
-    /** "Sign in with Slack" 플로우에 필요한 사용자 스코프. */
-    private static final String USER_SCOPE = "identity.basic,identity.email,identity.avatar";
-
-    private final String clientId;
-    private final String redirectUrl;
-    private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthCookieFactory cookieFactory;
 
-    public AuthController(@Value("${slack.client-id}") final String clientId,
-                          @Value("${slack.redirect-url}") final String redirectUrl,
-                          final AuthService authService,
-                          final JwtTokenProvider jwtTokenProvider,
+    public AuthController(final JwtTokenProvider jwtTokenProvider,
                           final AuthCookieFactory cookieFactory) {
-        this.clientId = clientId;
-        this.redirectUrl = redirectUrl;
-        this.authService = authService;
         this.jwtTokenProvider = jwtTokenProvider;
         this.cookieFactory = cookieFactory;
-    }
-
-    /**
-     * 로그인 버튼 클릭 시 진입점. Slack 인가 페이지로 리다이렉트한다.
-     */
-    @GetMapping("/oauth/slack")
-    public String authorize() {
-        String authorizeUrl = UriComponentsBuilder
-            .fromUriString("https://slack.com/oauth/v2/authorize")
-            .queryParam("client_id", clientId)
-            .queryParam("user_scope", USER_SCOPE)
-            .queryParam("redirect_uri", redirectUrl)
-            .encode()
-            .toUriString();
-
-        return "redirect:" + authorizeUrl;
-    }
-
-    /**
-     * Slack 콜백. 인가 코드로 로그인 후, 자체 JWT 액세스/리프레시 토큰을 쿠키로 발급한다.
-     */
-    @GetMapping("/oauth/slack/callback")
-    public String callback(@RequestParam("code") final String code,
-                           final HttpServletResponse response) {
-        LoginUser user = authService.login(code);
-        issueTokens(user, response);
-        return "redirect:/home";
     }
 
     /**
@@ -74,11 +38,9 @@ public class AuthController {
                           final HttpServletResponse response) {
         LoginUser user = jwtTokenProvider.parseRefreshToken(refreshToken);
         if (user == null) {
-            // 리프레시 토큰이 없거나 만료 → 재로그인
             clearTokens(response);
             return "redirect:/login";
         }
-
         issueTokens(user, response);
         return "redirect:/home";
     }
@@ -93,10 +55,8 @@ public class AuthController {
     }
 
     private void issueTokens(final LoginUser user, final HttpServletResponse response) {
-        String accessToken = jwtTokenProvider.createAccessToken(user);
-        String refreshToken = jwtTokenProvider.createRefreshToken(user);
-        addCookie(response, cookieFactory.accessCookie(accessToken));
-        addCookie(response, cookieFactory.refreshCookie(refreshToken));
+        addCookie(response, cookieFactory.accessCookie(jwtTokenProvider.createAccessToken(user)));
+        addCookie(response, cookieFactory.refreshCookie(jwtTokenProvider.createRefreshToken(user)));
     }
 
     private void clearTokens(final HttpServletResponse response) {
