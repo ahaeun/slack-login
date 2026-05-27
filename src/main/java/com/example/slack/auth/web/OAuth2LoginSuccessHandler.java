@@ -48,7 +48,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
         String registrationId = token.getAuthorizedClientRegistrationId();
-        LoginUser user = toLoginUser(registrationId, token.getPrincipal());
+        LoginUser user = toLoginUser(registrationId, token.getPrincipal(), token.getAuthorizedClientRegistrationId());
 
         addCookie(response, cookieFactory.accessCookie(jwtTokenProvider.createAccessToken(user)));
         addCookie(response, cookieFactory.refreshCookie(jwtTokenProvider.createRefreshToken(user)));
@@ -56,7 +56,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
-    private LoginUser toLoginUser(final String registrationId, final OAuth2User oauthUser) {
+    private LoginUser toLoginUser(final String registrationId, final OAuth2User oauthUser, final String provider) {
         if ("naver".equals(registrationId)) {
             // 네이버는 { "response": { id, name, email, profile_image } } 구조
             Map<String, Object> r = oauthUser.getAttribute("response");
@@ -67,7 +67,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 str(r.get("id")),
                 str(r.get("name")),
                 str(r.get("email")),
-                str(r.get("profile_image")));
+                str(r.get("profile_image")),
+                provider);
         }
 
         // Google·Slack: OIDC 표준 클레임
@@ -75,7 +76,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             oauthUser.getAttribute("sub"),
             oauthUser.getAttribute("name"),
             oauthUser.getAttribute("email"),
-            oauthUser.getAttribute("picture"));
+            oauthUser.getAttribute("picture"),
+            provider);
     }
 
     private String str(final Object value) {

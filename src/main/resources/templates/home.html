@@ -24,6 +24,8 @@
                 <dd th:text="${user.name}">-</dd>
                 <dt>이메일</dt>
                 <dd th:text="${user.email}">-</dd>
+                <dt>로그인 경로</dt>
+                <dd th:text="${user.provider}">-</dd>
             </dl>
 
             <a class="login__email-btn home__logout" th:href="@{/logout}">로그아웃</a>

@@ -26,6 +26,7 @@ public class JwtTokenProvider {
     private static final String CLAIM_TYPE = "type";
     private static final String CLAIM_NAME = "name";
     private static final String CLAIM_EMAIL = "email";
+    private static final String CLAIM_PROVIDER = "provider";
     private static final String CLAIM_AVATAR = "avatar";
     private static final String TYPE_ACCESS = "access";
     private static final String TYPE_REFRESH = "refresh";
@@ -63,6 +64,7 @@ public class JwtTokenProvider {
             .claim(CLAIM_NAME, user.name())
             .claim(CLAIM_EMAIL, user.email())
             .claim(CLAIM_AVATAR, user.avatar())
+            .claim(CLAIM_PROVIDER, user.provider())
             .issuedAt(now)
             .expiration(expiry)
             .signWith(key)
@@ -87,7 +89,8 @@ public class JwtTokenProvider {
             claims.getSubject(),
             claims.get(CLAIM_NAME, String.class),
             claims.get(CLAIM_EMAIL, String.class),
-            claims.get(CLAIM_AVATAR, String.class));
+            claims.get(CLAIM_AVATAR, String.class),
+            claims.get(CLAIM_PROVIDER, String.class));
     }
 
     private Claims parse(final String token, final String expectedType) {
