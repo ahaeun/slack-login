@@ -59,6 +59,8 @@ jobs:
           GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
           SLACK_CLIENT_ID=${{ secrets.SLACK_CLIENT_ID }}
           SLACK_CLIENT_SECRET=${{ secrets.SLACK_CLIENT_SECRET }}
+          NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           EOF
           scp -i ~/.ssh/slack-login.pem -o StrictHostKeyChecking=no \
